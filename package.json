@@ -1,0 +1,42 @@
+{
+  "dependencies": {
+    "@cosmjs/stargate": "^0.39.0",
+    "@qorechain/evm": "^0.14.0",
+    "@qorechain/pqc": "^0.2.3",
+    "@qorechain/sdk": "^0.14.0"
+  },
+  "description": "Quantum Escrow: a milestone escrow on QoreChain testnet where release needs a hybrid post-quantum approval.",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ignition": "^3.1.9",
+    "@nomicfoundation/hardhat-ignition-viem": "^3.1.6",
+    "@nomicfoundation/hardhat-keystore": "^3.1.2",
+    "@nomicfoundation/hardhat-network-helpers": "^3.0.12",
+    "@nomicfoundation/hardhat-node-test-runner": "^3.1.2",
+    "@nomicfoundation/hardhat-toolbox-viem": "^5.0.7",
+    "@nomicfoundation/hardhat-verify": "^3.1.4",
+    "@nomicfoundation/hardhat-viem": "^3.1.0",
+    "@nomicfoundation/hardhat-viem-assertions": "^3.1.5",
+    "@nomicfoundation/ignition-core": "^3.1.11",
+    "@types/node": "^22.7.5",
+    "hardhat": "^3.21.1",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.3",
+    "viem": "^2.47.6",
+    "vite": "^6.0.0"
+  },
+  "name": "quantum-escrow",
+  "private": true,
+  "scripts": {
+    "build": "hardhat build && vite build",
+    "build:contracts": "hardhat build",
+    "build:web": "vite build",
+    "deploy:testnet": "hardhat ignition deploy ignition/modules/QuantumEscrow.ts --network qorechainTestnet",
+    "dev": "vite",
+    "preview": "vite preview",
+    "test": "hardhat test",
+    "typecheck": "tsc --noEmit",
+    "window": "tsx scripts/window.ts"
+  },
+  "type": "module",
+  "version": "1.0.0"
+}

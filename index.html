@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quantum Escrow, milestone payment with post-quantum approval</title>
+<meta name="description" content="Quantum Escrow is a milestone escrow on QoreChain testnet. Release needs a hybrid post-quantum approval. Classical only approval is rejected.">
+<link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+<header class="topbar">
+<div class="brand">
+<span class="mark">QE</span>
+<div>
+<h1>Quantum Escrow</h1>
+<p>Milestone payment, approved the quantum safe way</p>
+</div>
+</div>
+<nav class="topnav" aria-label="Sections">
+<a href="#ledger">Ledger</a>
+<a href="#receipts">Receipts</a>
+<a href="#how">How it works</a>
+<a href="#wallet">Wallet status</a>
+</nav>
+<span class="pill demo-pill">Demo mode, testnet only, no real money</span>
+</header>
+<main>
+<section class="hero">
+<div class="hero-copy">
+<p class="eyebrow">QoreChain testnet, Intermediate, solo</p>
+<h2>A client and a freelancer do not trust each other to release payment on time.</h2>
+<p class="lede">Quantum Escrow holds the payment in a milestone escrow. The client funds it first, the freelancer can see the money is held, and payment releases only after a hybrid approval: a classical signature plus a real ML-DSA-87 post-quantum signature. A classical signature on its own is rejected, every time.</p>
+<a class="btn primary hero-cta" href="#ledger">Open the ledger</a>
+</div>
+<aside class="hero-card" aria-label="Escrow preview">
+<p class="eyebrow">Live testnet flow complete, demo mode for local runs</p>
+<p class="hero-amount"><span id="heroAmount" class="hero-number">250</span><span class="hero-unit">fUSD</span></p>
+<p class="hero-amount-label">Milestone amount for the current escrow</p>
+<dl class="hero-metrics">
+<div><dt>Demo balance</dt><dd id="heroBalance">1,000 fUSD</dd></div>
+<div><dt>Escrow held</dt><dd id="heroHeld">0 fUSD</dd></div>
+<div><dt>Freelancer received</dt><dd id="heroReceived">0 fUSD</dd></div>
+</dl>
+<p class="hero-status">Demo mode. Simulated fUSD, no chain transaction sent in this local run. Live testnet flow is complete, see the live section below.</p>
+</aside>
+</section>
+
+<section class="metrics" aria-label="Live metrics">
+<div class="metric"><strong>9800</strong><span>EVM chain id, qorechain-diana</span></div>
+<div class="metric"><strong>99.85 QOR</strong><span>Wallet balance, verified Nov 15</span></div>
+<div class="metric"><strong>Registered</strong><span>ML-DSA-87 key, verified Nov 15</span></div>
+<div class="metric"><strong>LIVE</strong><span>Contract QuantumEscrowLive 0xb014d1d21dee9536e66d12097a7ecf16df4cb506</span></div>
+<div class="metric"><strong>7 days</strong><span>Escrow window after funding</span></div>
+</section>
+
+<section class="wallet" id="live" aria-label="Live testnet result">
+<p class="eyebrow">Live on testnet, verified Nov 15</p>
+<h2>Live testnet flow, complete 5 of 5</h2>
+<p>Testnet qorechain-diana, EVM chain 9800. Deploy, create escrow 0, fund 0.01 QOR, approve with live ML-DSA-87 verification via the real PQC Verify precompile 0x0000000000000000000000000000000000000a01, release, all done Nov 15 about 02:44 to 02:49 WAT.</p>
+<div class="wallet-grid">
+<div><strong>Live contract</strong><span class="addr">QuantumEscrowLive 0xb014d1d21dee9536e66d12097a7ecf16df4cb506</span></div>
+<div><strong>Escrow 0 final status</strong><span>Released</span></div>
+<div><strong>Funded amount</strong><span>0.01 QOR</span></div>
+<div><strong>Contract balance</strong><span>0 QOR</span></div>
+<div><strong>Client, coin 60 EVM</strong><span class="addr">0x60934cfE09477E8be038CEd7Ef140c9643d5466f</span></div>
+<div><strong>Freelancer, coin 118 EVM</strong><span class="addr">0xB5b7328A3981431BE72bF1282c0F08A7905fC827</span></div>
+</div>
+<p class="note">The steps above are the live testnet result. The ledger below still runs in demo mode, with simulated fUSD and no chain transaction sent in a local run.</p>
+</section>
+
+<section class="ledger" id="ledger" aria-label="Escrow ledger">
+<div class="ledger-head">
+<div>
+<p class="eyebrow">Ledger</p>
+<h2>Escrow ledger</h2>
+<p id="balanceLine">Demo fUSD balance: 1,000 fUSD held by you, the client. Freelancer received: 0 fUSD. Escrow held: 0 fUSD.</p>
+</div>
+<span class="pill status-pill">Status: live flow complete, demo mode for local runs</span>
+</div>
+<form id="createForm" class="create-form">
+<label>Milestone title<input id="title" value="Homepage build, milestone 1" required></label>
+<label>Freelancer name<input id="freelancer" value="Ada, freelance designer" required></label>
+<label>Amount, fUSD<input id="amount" type="number" min="1" max="1000" value="250" required></label>
+<button type="submit" class="btn primary">Create milestone escrow</button>
+</form>
+<div id="escrowCard" class="escrow-card hidden">
+<h3 id="escrowTitle">Milestone</h3>
+<p id="escrowMeta">Escrow</p>
+<ol class="timeline" id="timeline">
+<li data-step="created"><span class="dot"></span><strong>Created</strong><span>Escrow opened, waiting for funding.</span></li>
+<li data-step="funded"><span class="dot"></span><strong>Funded</strong><span>Payment held in escrow, window open for 7 days.</span></li>
+<li data-step="approved"><span class="dot"></span><strong>Approved, hybrid</strong><span>Classical plus ML-DSA-87 approval verified.</span></li>
+<li data-step="released"><span class="dot"></span><strong>Released</strong><span>Payment sent to the freelancer, receipt issued.</span></li>
+</ol>
+<div class="actions">
+<button id="fundBtn" class="btn primary">Fund in demo mode</button>
+<button id="classicalBtn" class="btn danger" disabled>Try classical only approval</button>
+<button id="hybridBtn" class="btn primary" disabled>Approve with hybrid signature</button>
+<button id="releaseBtn" class="btn success" disabled>Release payment</button>
+<button id="resetBtn" class="btn ghost">Start over</button>
+</div>
+<p class="hint">Step order matters. Fund first, then try the classical only approval to see it rejected, then approve with the hybrid signature, then release.</p>
+</div>
+</section>
+
+<section class="receipts" id="receipts" aria-label="Receipts">
+<p class="eyebrow">Proof</p>
+<h2>Receipts</h2>
+<p>Every step writes a receipt here. Nothing is faked: demo mode is labelled, and the live testnet flow is complete, see the live section above.</p>
+<div id="receipts" class="receipt-list">
+<p class="empty">No receipts yet. Create a milestone escrow to begin.</p>
+</div>
+</section>
+
+<section class="how" id="how" aria-label="How it works">
+<p class="eyebrow">Flow</p>
+<h2>How it works</h2>
+<ol class="how-grid">
+<li><strong class="how-num">1</strong><strong>Create.</strong> The client opens a milestone escrow with a title, a freelancer, and an amount in fUSD.</li>
+<li><strong class="how-num">2</strong><strong>Fund.</strong> The client funds it in demo mode with test tokens. On testnet this is a real fund call inside a scoped EVM window.</li>
+<li><strong class="how-num">3</strong><strong>Approve, hybrid.</strong> The client signs the approval message twice: once classically, and once with a fresh ML-DSA-87 keypair from @qorechain/pqc 0.2.3. The demo verifies that post-quantum signature in the browser.</li>
+<li><strong class="how-num">4</strong><strong>Release.</strong> After hybrid approval, payment releases to the freelancer and a receipt is issued. If the window closes with no approval, the client can refund.</li>
+</ol>
+<p class="note">Classical only approval is rejected on chain by QuantumEscrow.approveMilestone. The contract test suite proves it: 7 passing tests, including classical only rejection and hybrid success. The on chain post-quantum check in local tests is a deterministic stand in for the PQC Verify precompile. Live, the approval was verified with the real PQC Verify precompile 0x0000000000000000000000000000000000000a01, and the full live flow is complete: escrow 0 released, contract balance 0 QOR, Nov 15 about 02:44 to 02:49 WAT. See BUILD-REPORT.md for the exact audit results.</p>
+</section>
+
+<section class="wallet" id="wallet" aria-label="Wallet status">
+<p class="eyebrow">Wallet status, verified Nov 15</p>
+<h2>Five QoreX wallet, read only</h2>
+<p>Verified live Nov 15 with qore-cli on testnet qorechain-diana, chain 9800. No transaction hash is invented here.</p>
+<div class="wallet-grid">
+<div><strong>Native address</strong><span class="addr">qor1kkmn9z3es9p3heet7y5zcrcg57g9ljp8909r5u</span></div>
+<div><strong>EVM address</strong><span class="addr">0xB5b7328A3981431BE72bF1282c0F08A7905fC827</span></div>
+<div><strong>Balance</strong><span>99.85 QOR</span></div>
+<div><strong>ML-DSA-87 key</strong><span>Registered, true</span></div>
+<div><strong>EVM window</strong><span>Opened for the live flow</span></div>
+<div><strong>Live contract</strong><span class="addr">QuantumEscrowLive 0xb014d1d21dee9536e66d12097a7ecf16df4cb506</span></div>
+</div>
+<p class="note">History: fresh account at first check, exists false, 0 QOR. Faucet claimed Nov 15 01:00 WAT, 100 QOR, account number 15585, sequence 0. Key registration completed Nov 15 01:13 WAT, sequence 2, balance 99.85 QOR, 100 QOR minus 0.15 QOR in fees. Live flow complete Nov 15 about 02:44 to 02:49 WAT: deploy, create escrow 0, fund 0.01 QOR, approve with live ML-DSA-87 verification via the real PQC Verify precompile, release. Escrow 0 final status released, contract balance 0 QOR.</p>
+</section>
+
+<section class="kits" aria-label="QoreChain kits">
+<p class="eyebrow">Kits</p>
+<h2>QoreChain kits used</h2>
+<ul>
+<li><strong>QoreChain SDK 0.14.0</strong>, @qorechain/sdk, for the unified account, PQC key status, and the EVM authorisation window helper in scripts/window.ts.</li>
+<li><strong>@qorechain/pqc 0.2.3</strong>, for real ML-DSA-87 key generation, signing, and verification in the demo.</li>
+<li><strong>QoreSign</strong>, the signing model the hybrid approval follows: classical plus post-quantum, both required.</li>
+<li><strong>@qorechain/evm 0.14.0</strong>, for the EVM window cost and status checks before any testnet deploy.</li>
+</ul>
+<p class="note">Live contract address: QuantumEscrowLive 0xb014d1d21dee9536e66d12097a7ecf16df4cb506. Deployer wallet is qor1kkmn9z3es9p3heet7y5zcrcg57g9ljp8909r5u (Native) and 0xB5b7328A3981431BE72bF1282c0F08A7905fC827 (EVM form, same identity). Verified live Nov 15 with qore-cli on testnet qorechain-diana chain 9800. Live flow complete Nov 15 about 02:44 to 02:49 WAT: deploy, create escrow 0, fund 0.01 QOR, approve with live ML-DSA-87 verification via the real PQC Verify precompile 0x0000000000000000000000000000000000000a01, release. Escrow 0 final status released, contract balance 0 QOR. Client coin 60 EVM 0x60934cfE09477E8be038CEd7Ef140c9643d5466f, freelancer coin 118 EVM 0xB5b7328A3981431BE72bF1282c0F08A7905fC827. No transaction hash is invented here.</p>
+</section>
+</main>
+<footer class="endcard">
+<p class="end-mark">QE</p>
+<p class="end-name">Quantum Escrow</p>
+<p class="end-tagline" aria-label="Payment held. Proof checked. Money released."><span>Payment</span> <span>held.</span> <span>Proof</span> <span>checked.</span> <span>Money</span> <span>released.</span></p>
+<p class="end-note">Quantum Escrow, Intermediate, QoreChain Build Before Q-Day. Testnet only. Demo mode uses simulated fUSD and a real ML-DSA-87 signature verified in the browser. No real money moves here. Live testnet flow complete Nov 15 about 02:44 to 02:49 WAT: escrow 0 released, contract QuantumEscrowLive 0xb014d1d21dee9536e66d12097a7ecf16df4cb506, contract balance 0 QOR.</p>
+</footer>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
